@@ -339,7 +339,7 @@ public class AdministradorCursos extends javax.swing.JFrame {
                 modeloListado.setValueAt(cursos[i].alumnos, i, 3);
                 modeloListado.setValueAt(cursos[i].profesor, i, 4);
             }
-/*
+
             // hacer top 3
             Curso[] arregloCopia = cursos.clone();
 
@@ -376,7 +376,7 @@ public class AdministradorCursos extends javax.swing.JFrame {
                 modeloTop3.setValueAt(arregloCopia[i].nombre, i, 1);
                 modeloTop3.setValueAt(arregloCopia[i].alumnos, i, 2);
             }
-*/
+
         }
     }
     
