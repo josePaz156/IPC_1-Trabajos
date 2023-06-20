@@ -4,6 +4,9 @@
  */
 package ipc1.practica2_202201185;
 
+import static ipc1.practica2_202201185.verRecorrido.vehiculo1Lbl;
+import static ipc1.practica2_202201185.verRecorrido.vehiculo2Lbl;
+import static ipc1.practica2_202201185.verRecorrido.vehiculo3Lbl;
 import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
@@ -20,9 +23,9 @@ public class Inicio extends javax.swing.JFrame {
     public static int contadorProductos;
     public static String productoSelec;
     public static String precioSelec;
-    public static int acumulado=0;
-    public static String vehiculo;
-    public static String distancia;
+    public static int acumulado = 0;
+    public static int vehiculo;
+    public static int distancia;
 
     /**
      * Creates new form Inicio
@@ -32,7 +35,7 @@ public class Inicio extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         llenarProductos();
-        jAcumulado.setText("Q"+acumulado);
+        jAcumulado.setText("Q" + acumulado);
     }
 
     /**
@@ -114,7 +117,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        listadoVehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vehiculo 1", "Vehiculo 2", "Vehiculo 3", "Vehiculo 4" }));
+        listadoVehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vehiculo 1", "Vehiculo 2", "Vehiculo 3" }));
         listadoVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 listadoVehiculosActionPerformed(evt);
@@ -193,7 +196,7 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addGap(30, 30, 30))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 1, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(distanciaIn, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,7 +247,7 @@ public class Inicio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -270,60 +273,62 @@ public class Inicio extends javax.swing.JFrame {
         tProductos[contadorProductos] = pedido;
         contadorProductos++;
         agregarProducto();
-        
-        int i = Integer.parseInt(precioSelec); 
-        acumulado = acumulado+i;
-        jAcumulado.setText("Q"+acumulado);
+
+        int i = Integer.parseInt(precioSelec);
+        acumulado = acumulado + i;
+        jAcumulado.setText("Q" + acumulado);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     public void agregarProducto() {
 
-            DefaultTableModel modelCarrito = (DefaultTableModel) listadoCarrito.getModel();
-            modelCarrito.setRowCount(contadorProductos);
+        DefaultTableModel modelCarrito = (DefaultTableModel) listadoCarrito.getModel();
+        modelCarrito.setRowCount(contadorProductos);
 
-            for (int i = 0; i < contadorProductos; i++) {
-                modelCarrito.setValueAt(tProductos[i].producto, i, 0);
-                modelCarrito.setValueAt(tProductos[i].precio, i, 1);
-            }
+        for (int i = 0; i < contadorProductos; i++) {
+            modelCarrito.setValueAt(tProductos[i].producto, i, 0);
+            modelCarrito.setValueAt(tProductos[i].precio, i, 1);
+        }
 
     }
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         fila = listadoCarrito.getSelectedRow();
-        precioSelec=listadoCarrito.getModel().getValueAt(fila, 1).toString();
+        precioSelec = listadoCarrito.getModel().getValueAt(fila, 1).toString();
 
         for (int i = fila; i < contadorProductos - 1; i++) {
             tProductos[i] = tProductos[i + 1];
         }
         // se reduce en 1 la cantidad de profesores
         contadorProductos--;
-        
-        int i = Integer.parseInt(precioSelec); 
-        acumulado = acumulado-i;
-        jAcumulado.setText("Q"+acumulado);     
-        
+
+        int i = Integer.parseInt(precioSelec);
+        acumulado = acumulado - i;
+        jAcumulado.setText("Q" + acumulado);
+
         agregarProducto();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
-        guardarPedido();
+        Date horaPedido = new Date();
+        System.out.println(horaPedido);
+        vehiculo = listadoVehiculos.getSelectedIndex();
+        distancia = Integer.parseInt(distanciaIn.getText());
+        
+        verRecorrido.establecerDistancia();
+
         System.out.println(vehiculo);
         System.out.println(distancia);
         System.out.println(acumulado);
-        
+
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    public void guardarPedido(){
-        Date horaPedido = new Date();
-        System.out.println(horaPedido);
-        vehiculo = listadoVehiculos.getSelectedItem().toString();
-        distancia = distanciaIn.getText();
-    }
-    
     private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        verRecorrido open = new verRecorrido();
+        open.setVisible(true);
     }//GEN-LAST:event_btnVehiculosActionPerformed
 
     private void listadoVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listadoVehiculosActionPerformed
