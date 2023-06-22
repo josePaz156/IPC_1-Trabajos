@@ -4,6 +4,7 @@
  */
 package ipc1.practica2_202201185;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -39,6 +40,7 @@ public class recorrido extends Thread {
                         vehiculo.setLocation(vehiculoPosX+10,vehiculo.getLocation().y);
                     }else{
                         regreso=true;
+                        horaEntrega();
                     }
                 }else{
                     if(vehiculoPosX>100){
@@ -53,6 +55,9 @@ public class recorrido extends Thread {
             }
         }
     }
+    public static void horaEntrega(){
+        Date horaEntrega = new Date();
+    } 
     
     
 }

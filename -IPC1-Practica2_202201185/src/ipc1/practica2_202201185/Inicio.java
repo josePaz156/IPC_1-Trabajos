@@ -4,12 +4,13 @@
  */
 package ipc1.practica2_202201185;
 
-import static ipc1.practica2_202201185.verRecorrido.vehiculo1Lbl;
-import static ipc1.practica2_202201185.verRecorrido.vehiculo2Lbl;
-import static ipc1.practica2_202201185.verRecorrido.vehiculo3Lbl;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -18,24 +19,25 @@ import java.util.Date;
 public class Inicio extends javax.swing.JFrame {
 
     public static Producto[] tProductos = new Producto[50];
+    public static historialPedidos[] historial = new historialPedidos[300];
 
     public static int fila;
     public static int contadorProductos;
     public static String productoSelec;
     public static String precioSelec;
     public static int acumulado = 0;
+    public static int contadorPedidosIn = 0;
+    public static String vehiculoHistorial;
     public static int vehiculo;
     public static int distancia;
 
-    /**
-     * Creates new form Inicio
-     */
     public Inicio() {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         llenarProductos();
         jAcumulado.setText("Q" + acumulado);
+
     }
 
     /**
@@ -63,9 +65,15 @@ public class Inicio extends javax.swing.JFrame {
         jAcumulado = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         distanciaIn = new javax.swing.JTextField();
+        btnVehiculos1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Productos");
@@ -167,6 +175,14 @@ public class Inicio extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Distancia");
 
+        btnVehiculos1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnVehiculos1.setText("Ver historial pedidos");
+        btnVehiculos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVehiculos1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,6 +193,8 @@ public class Inicio extends javax.swing.JFrame {
                         .addGap(170, 170, 170)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVehiculos1)
+                        .addGap(18, 18, 18)
                         .addComponent(btnVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +236,9 @@ public class Inicio extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(btnVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVehiculos1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -253,6 +273,34 @@ public class Inicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private static void serializeArray(String filename) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(historial);
+            objectOut.close();
+            fileOut.close();
+            System.out.println("Array serialized successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static historialPedidos[] deserializeArray(String filename) {
+        historialPedidos[] deserializedArray = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(filename);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            deserializedArray = (historialPedidos[]) objectIn.readObject();
+            objectIn.close();
+            fileIn.close();
+            System.out.println("Array deserialized successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return deserializedArray;
+    }
+    
     public void llenarProductos() {
         DefaultTableModel model = (DefaultTableModel) listadoProducto.getModel();
         model.addRow(new Object[]{"Pizza", 50});
@@ -315,14 +363,33 @@ public class Inicio extends javax.swing.JFrame {
         System.out.println(horaPedido);
         vehiculo = listadoVehiculos.getSelectedIndex();
         distancia = Integer.parseInt(distanciaIn.getText());
-        
+
+        if (vehiculo == 0) {
+            vehiculoHistorial = "Vehiculo 1";
+        } else if (vehiculo == 1) {
+            vehiculoHistorial = "Vehiculo 2";
+        } else if (vehiculo == 2) {
+            vehiculoHistorial = "Vehiculo 3";
+        }
+
+        historial[contadorPedidosIn] = new historialPedidos(vehiculoHistorial, distancia, acumulado, horaPedido.toString());
         verRecorrido.establecerDistancia();
-
-        System.out.println(vehiculo);
-        System.out.println(distancia);
-        System.out.println(acumulado);
-
+        contadorPedidosIn++;
+        limpiarVentana();
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    public void limpiarVentana() {
+        acumulado = 0;
+        jAcumulado.setText("Q" + acumulado);
+        distanciaIn.setText("");
+        DefaultTableModel model = (DefaultTableModel) listadoCarrito.getModel();
+        model.setRowCount(0);
+
+        for (int i = 0; i < tProductos.length; i++) {
+            tProductos[i] = null;
+        }
+        contadorProductos = 0;
+    }
 
     private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed
         // TODO add your handling code here:
@@ -334,6 +401,18 @@ public class Inicio extends javax.swing.JFrame {
     private void listadoVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listadoVehiculosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_listadoVehiculosActionPerformed
+
+    private void btnVehiculos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculos1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        verHistorial open = new verHistorial();
+        open.setVisible(true);
+    }//GEN-LAST:event_btnVehiculos1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        serializeArray("./Respaldo.txt");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -376,6 +455,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVehiculos;
+    private javax.swing.JButton btnVehiculos1;
     private javax.swing.JTextField distanciaIn;
     private javax.swing.JLabel jAcumulado;
     private javax.swing.JLabel jLabel1;

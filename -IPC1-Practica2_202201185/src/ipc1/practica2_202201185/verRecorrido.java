@@ -7,6 +7,7 @@ package ipc1.practica2_202201185;
 import static ipc1.practica2_202201185.Inicio.distancia;
 import static ipc1.practica2_202201185.Inicio.vehiculo;
 
+
 /**
  *
  * @author andre
@@ -40,7 +41,12 @@ public class verRecorrido extends javax.swing.JFrame {
         vehiculo3Lbl = new javax.swing.JLabel();
         vehiculo1Lbl = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         destinoLbl.setBackground(new java.awt.Color(51, 204, 0));
         destinoLbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -119,6 +125,13 @@ public class verRecorrido extends javax.swing.JFrame {
         recorrido pedidoConfirmado3 = new recorrido(vehiculo3Lbl, d3);
         pedidoConfirmado3.start();
     }//GEN-LAST:event_vehiculo3LblMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Inicio open = new Inicio();
+        open.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     public static void establecerDistancia(){
         if (vehiculo == 0) {
