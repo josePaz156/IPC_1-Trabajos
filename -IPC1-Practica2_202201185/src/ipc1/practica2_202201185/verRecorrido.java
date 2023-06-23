@@ -40,6 +40,7 @@ public class verRecorrido extends javax.swing.JFrame {
         vehiculo2Lbl = new javax.swing.JLabel();
         vehiculo3Lbl = new javax.swing.JLabel();
         vehiculo1Lbl = new javax.swing.JLabel();
+        EnviarPedidos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -74,6 +75,13 @@ public class verRecorrido extends javax.swing.JFrame {
             }
         });
 
+        EnviarPedidos.setText("Enviar");
+        EnviarPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnviarPedidosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,6 +95,10 @@ public class verRecorrido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 799, Short.MAX_VALUE)
                 .addComponent(destinoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(EnviarPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(489, 489, 489))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,7 +114,9 @@ public class verRecorrido extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(destinoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(2, 2, 2)
+                .addComponent(EnviarPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,6 +146,16 @@ public class verRecorrido extends javax.swing.JFrame {
         Inicio open = new Inicio();
         open.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void EnviarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarPedidosActionPerformed
+        // TODO add your handling code here:
+        recorrido pedidoConfirmado1 = new recorrido(vehiculo1Lbl, d1);
+        pedidoConfirmado1.start();
+        recorrido pedidoConfirmado2 = new recorrido(vehiculo2Lbl, d2);
+        pedidoConfirmado2.start();
+        recorrido pedidoConfirmado3 = new recorrido(vehiculo3Lbl, d1);
+        pedidoConfirmado3.start();
+    }//GEN-LAST:event_EnviarPedidosActionPerformed
 
     public static void establecerDistancia(){
         if (vehiculo == 0) {
@@ -179,6 +203,7 @@ public class verRecorrido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EnviarPedidos;
     public static javax.swing.JLabel destinoLbl;
     public static javax.swing.JLabel vehiculo1Lbl;
     public static javax.swing.JLabel vehiculo2Lbl;

@@ -4,9 +4,9 @@
  */
 package ipc1.practica2_202201185;
 
+import static ipc1.practica2_202201185.IPC1Practica2_202201185.historial;
 import static ipc1.practica2_202201185.Inicio.contadorPedidosIn;
 import static ipc1.practica2_202201185.Inicio.deserializeArray;
-import static ipc1.practica2_202201185.Inicio.historial;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,10 +24,6 @@ public class verHistorial extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         llenarHistorial();
         llenarHistorialRespaldo();
-    }
-
-    public void mostrarRespaldoHistorial() {
-
     }
 
     public void llenarHistorial() {

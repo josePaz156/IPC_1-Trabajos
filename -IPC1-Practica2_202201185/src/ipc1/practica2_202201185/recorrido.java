@@ -7,6 +7,8 @@ package ipc1.practica2_202201185;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 
 /**
@@ -19,6 +21,9 @@ public class recorrido extends Thread {
     boolean regreso;
     
     final int posDestino = verRecorrido.destinoLbl.getLocation().x;
+    
+    Icon iconoIda = new ImageIcon("C:\\Users\\andre\\OneDrive\\Escritorio\\Tareas\\Introduccion a la programacion\\Proyectos\\Proyectos\\-IPC1-Practica2_202201185\\src\\imagenes\\ida.jpg");
+    Icon iconoRegreso = new ImageIcon("C:\\Users\\andre\\OneDrive\\Escritorio\\Tareas\\Introduccion a la programacion\\Proyectos\\Proyectos\\-IPC1-Practica2_202201185\\src\\imagenes\\vuelta.jpg");
 
     public recorrido(JLabel vehiculo, int distancia) {
         this.vehiculo = vehiculo;
@@ -40,7 +45,6 @@ public class recorrido extends Thread {
                         vehiculo.setLocation(vehiculoPosX+10,vehiculo.getLocation().y);
                     }else{
                         regreso=true;
-                        horaEntrega();
                     }
                 }else{
                     if(vehiculoPosX>100){
@@ -55,9 +59,6 @@ public class recorrido extends Thread {
             }
         }
     }
-    public static void horaEntrega(){
-        Date horaEntrega = new Date();
-    } 
-    
-    
+
+  
 }

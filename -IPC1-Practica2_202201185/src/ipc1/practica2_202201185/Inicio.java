@@ -4,6 +4,8 @@
  */
 package ipc1.practica2_202201185;
 
+import static ipc1.practica2_202201185.IPC1Practica2_202201185.historial;
+import static ipc1.practica2_202201185.IPC1Practica2_202201185.inContador;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import java.io.FileInputStream;
@@ -19,14 +21,13 @@ import java.io.ObjectOutputStream;
 public class Inicio extends javax.swing.JFrame {
 
     public static Producto[] tProductos = new Producto[50];
-    public static historialPedidos[] historial = new historialPedidos[300];
 
     public static int fila;
     public static int contadorProductos;
     public static String productoSelec;
     public static String precioSelec;
     public static int acumulado = 0;
-    public static int contadorPedidosIn = 0;
+    public static int contadorPedidosIn = inContador;
     public static String vehiculoHistorial;
     public static int vehiculo;
     public static int distancia;
