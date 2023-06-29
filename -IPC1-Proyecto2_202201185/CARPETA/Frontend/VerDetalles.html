@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Navegacion con tabs</title>
+	<link rel="stylesheet" href="estilosT.css">
+	<link rel="stylesheet" href="font-awesome.css">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="main.js"></script>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="tabs">
+			<li><a href="#tab1"><span class="fa fa-music"></span><span class="tab-text">Canciones</span></a></li>
+		
+		</ul>
+
+		<div class="secciones">
+			<!------agregando estilo con css a las tablas!---->
+			<style type="text/css">
+				table, th, td {
+					 border: 0.2px solid black;
+					 border-collapse: collapse;
+					 
+				}
+
+				th, td {
+					padding: 10	px;
+					text-align: center;
+
+				}
+				table {
+					background-color: rgb(124, 182, 177);
+				}
+				.section-title{
+					text-align: center;
+				}
+				th{
+				   background-color: rgb(20, 83, 83);
+
+				}
+				.button{
+					width: 50%;
+                    background: #5b185d;
+                    border: none;
+                    padding: 12px;
+                    color:  rgb(176, 210, 214);
+                    margin: 16px;
+                    font-size: 16px;
+                    border:0;
+
+				}
+				.img-fluid{
+		
+					text-align: center;
+				
+				}
+                .controls{
+                    width: 850px;
+                    height: 50px;
+                    
+                }
+				.botons{
+					width: 15%;
+                    background: #28302e;
+                    border: none;
+                    padding: 12px;
+                    color:  rgb(176, 210, 214);
+                    margin: 2px;
+                    font-size: 16px;
+                    border:0;
+				}
+		   </style>
+			<article id="tab1">
+                <body  id="main2" onload="MostrarCanciones()">
+					<section id="about" class="about">
+						<div class="container">
+							<div class="section-title">
+								
+							</div>
+							<a href="#" onclick="Regresa()">Regresar</a>
+						
+                            <table class="table" style="width: 100%">
+                                
+                                <th scope="col">Cancion</th>
+                                <th scope="col">Información</th>
+
+							<tbody id="CuerpoCanciones">
+						</tbody>
+                     </table>
+                   <br></br>
+                 <input  class="controls" type="text" name="comentario" id="comentario" placeholder="Comentario">
+                 <input class="botons" onclick="Extraer()" type="button" value="Guardar Comentarios">
+				 <input class="botons" onclick="VerComentario()" type="button" value="Ver comentarios">
+
+		<script>
+
+
+			function Extraer() {
+				var cargar = sessionStorage.persona
+				var id = sessionStorage.buscar
+				var contenido = document.querySelector('#comentario').value
+			
+					var objeto = {
+						'nombre': contenido,
+						'id': id,
+						'persona': cargar
+					}
+
+					console.log(objeto)
+					fetch('http://127.0.0.1:5000/Comentariosa/', {
+					method: 'POST', // Indicamos que metodo es
+					body: JSON.stringify(objeto), // Convertimos nuestros datos en un JSON legible para la API
+					headers:{
+						'Content-Type': 'application/json'
+					}
+					}).then(res => res.json())
+					.catch(err => {
+					console.error('Error:', err)
+					alert("Ocurrio un error, ver la consola")
+					})
+					.then(response =>{
+					console.log(response);
+					console.log(response.menssage)
+						alert(`Se ha agregado un comentario`)
+						//sessionStorage.setItem("usuario",usuario)
+						location.href="VerDetalles.html"
+						//MostrarCanciones()
+					}) 
+				}
+
+
+				function MostrarCanciones()
+				{
+
+                    var cargar = sessionStorage.buscar
+
+					var contenido = document.querySelector('#CuerpoCanciones')
+					contenido.innerHTML = ""
+                    fetch(`http://127.0.0.1:5000//Canciones1/${cargar}`)
+                    .then(response => response.json())
+					.catch(error => {
+						console.log(error)
+				})
+					.then(res => {
+							   contenido.innerHTML +=                    
+						        `<tr>
+                                <td><iframe src="${res.LinkY}" width="400" height="350" frameborder="0" allowtranspatency="true" allow="encrypted-media"></iframe>
+                                    </td>
+                                <td>
+                                    <img src="${res.Imagen}" class="img-fluid" height="200" width="200">
+                                    <br><b>Artista:</b> ${res.Artista}</br>
+                                    <br><b>Album:</b> ${res.Album}</br> 
+                                    <br><b>Fecha de Lanzamiento:</b> ${res.Fecha}</br>
+                                </td>
+                                </tr>`                                
+					})
+				}
+
+				function VerComentario(){
+					var contenido = document.querySelector('#CuerpoCanciones')
+					var cargar2 = sessionStorage.buscar
+					fetch(`http://127.0.0.1:5000//Comentariosm/${cargar2}`)
+					.then(response => response.json())
+					.catch(error => {
+						console.log(error)
+					})
+					.then(res =>{
+						for (var i in res) {
+			  			if(res[i].nombre!=undefined && res[i].persona!=undefined){
+								console.log(res[i])
+						     	contenido.innerHTML += 
+						       `<tr>
+								<td><b> ${res[i].persona}:</b> ${res[i].nombre}</td>
+							   </tr>`
+							}
+						}
+					
+             })   
+				}
+	
+			function Regresa(){
+				location.href="CancionesCli.html"
+			}
+			
+			  </script>
+		</body>
+	 </div>
+   </div>
+ </body>
+</html>

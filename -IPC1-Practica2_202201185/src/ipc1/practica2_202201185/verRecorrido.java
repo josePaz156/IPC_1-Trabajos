@@ -153,7 +153,7 @@ public class verRecorrido extends javax.swing.JFrame {
         pedidoConfirmado1.start();
         recorrido pedidoConfirmado2 = new recorrido(vehiculo2Lbl, d2);
         pedidoConfirmado2.start();
-        recorrido pedidoConfirmado3 = new recorrido(vehiculo3Lbl, d1);
+        recorrido pedidoConfirmado3 = new recorrido(vehiculo3Lbl, d3);
         pedidoConfirmado3.start();
     }//GEN-LAST:event_EnviarPedidosActionPerformed
 

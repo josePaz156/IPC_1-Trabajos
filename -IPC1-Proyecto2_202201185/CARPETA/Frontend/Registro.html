@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilodos.css">    
+    <title>Aplicacion de Prueba</title>
+  </head>
+  <body>
+    <section class="form-register">
+      <h4>Registro</h4>
+      <br>
+      <input class="controls" type="text" name="nombre" id="nombre" placeholder="Nombre">
+      <input class="controls" type="text" name="apellido" id="apellido" placeholder="Apellido">
+      <input class="controls" type="text" name="usuario" id="usuario" placeholder="Usuario">
+      <input class="controls" type="password" name="password" id="password" placeholder="Contraseña">
+      <input class="controls" type="password" name="confirmar" id="confirmar" placeholder="Confirma Contraseña">
+
+
+      <input class="botons" onclick="IniciarSesion()" type="button" value="Registrarme">
+
+      <p><a href="#" onclick="Volver()">¿Ya tengo una cuenta?</a></p>
+    </section>
+  </body>
+
+    <!-- Creamos el script donde vamos a trabajar con JavaScript -->
+    <script>
+        // Metodo para iniciar sesion
+        var conf=false;
+        
+        function IniciarSesion(){
+          // Guardamos las variables necesarias
+          // En este caso, los input guardan su contenido en su propiedad value
+        var nombre = document.querySelector('#nombre').value
+        var apellido = document.querySelector('#apellido').value
+        var usuario = document.querySelector('#usuario').value
+        var password = document.querySelector('#password').value
+        var confirmar = document.querySelector('#confirmar').value
+       
+
+  
+          // Creamos un objeto al estilo JSON, pues es lo que mandamos en la API
+          // Hacemos este objeto con llaves y como si fuera un nombre valor
+
+        var objeto = {
+            'nombre': nombre,
+            'apellido': apellido,
+            'usuario': usuario,
+            'contrasena': password
+        }
+        // Usamos console.log() para imprimir en consola
+        // Si no saben abrir la consola en el navegador, presionen F12
+        console.log(objeto)
+
+        if(nombre=="" || apellido =="" || usuario =="" || password==""){//si no llena las casillas correctamente
+          alert("Llene correctamente los datos.")
+        }else if( password!=confirmar ){//si no confirma bien la contraseña
+          alert("La confirmación de su password es erronea.")
+        }
+        else{//si lo anterior es valido, entonces realiza el fech
+        fetch('http://127.0.0.1:5000/Clientes/', {
+        method: 'POST', // Indicamos que metodo es
+        body: JSON.stringify(objeto), // Convertimos nuestros datos en un JSON legible para la API
+        headers:{
+            'Content-Type': 'application/json'
+        }
+        }).then(res => res.json())
+        .catch(err => {
+        console.error('Error:', err)
+        alert("Ocurrio un error, ver la consola")
+        })
+        .then(response =>{
+        console.log(response);
+        console.log(response.menssage)
+        if(response.usuario == usuario){//si la respuesta del post es igual a el uxsuario que se quiere guardar 
+           alert("Este usuario ya está registrado.")
+        }else{    //si no,
+            alert(`Se ha registrado con el usuario: ${usuario}`)
+            sessionStorage.setItem("usuario",usuario)
+            location.href="Registro.html"
+        }
+        }) 
+        }
+        }
+
+        function Volver(){
+            location.href="prulog.html"
+        }
+    </script>
+
+
+</html>

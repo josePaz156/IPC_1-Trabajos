@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilodos.css">    
+    <title>Aplicacion de Prueba</title>
+  </head>
+  <body>
+    <section class="form-register">
+      <h4>Recuperar contraseña</h4> 
+      <br>
+      <input class="controls" type="text" name="usuario" id="usuario" placeholder="Ingrese su Nombre de Usuario">
+      <input class="botons" onclick="RecuperarContra()" type="button" value="Rcuperar">
+
+      <p><a href="#" onclick="Volver()">Regresar</a></p>
+    </section>
+  </body>
+
+   
+    <script>
+       
+        function RecuperarContra(){
+         
+
+        var usuario = document.querySelector('#usuario').value
+
+
+        var objeto = {
+
+            'usuario': usuario
+  
+        }
+
+        console.log(objeto)
+
+
+        fetch('http://127.0.0.1:5000/Recuperar/', {
+        method: 'POST', 
+        body: JSON.stringify(objeto),
+        headers:{
+            'Content-Type': 'application/json'
+        }
+        }).then(res => res.json())
+        .catch(err => {
+        console.error('Error:', err)
+        alert("Ocurrio un error, ver la consola")
+        })
+        .then(response =>{
+        console.log(response);
+        console.log(response.message)
+        if(response.message == "False"){
+            alert("No has ingresado las credencilaes correctamente")
+        }else{
+            alert(`Su contraseña es: ${response.password}`)
+            sessionStorage.setItem("usuario",usuario)
+            location.href="prulog.html"
+        }
+        }) 
+        }
+
+        function Volver(){
+            location.href="prulog.html"
+        }
+    </script>
+
+
+</html>

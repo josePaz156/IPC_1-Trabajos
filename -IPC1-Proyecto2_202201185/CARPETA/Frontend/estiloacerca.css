@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+  }
+   
+   body {
+      background-color: #000;
+      
+    }
+    
+    .form-register2 {
+  
+      width: 950px;
+      height: 550px;
+      padding: 50px;
+      margin: auto;
+      margin-top: 80px;
+      border-radius: 40px;
+      font-family: 'arial';
+      color: white;
+      box-shadow: -20px 13px 100px rgb(94, 167, 177);
+      margin: center;
+      text-align: center;
+    
+    }
+    .boton{
+      background-color: darkcyan;
+      border: none;
+      padding: 15px 32px;
+      text-align: center;
+      display: inline-block;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .textBoton{
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+    }
+    
+    
+   
+    
+    

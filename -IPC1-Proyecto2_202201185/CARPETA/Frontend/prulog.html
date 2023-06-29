@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="pruestilo.css">
+  <title>Pagina Principal</title>
+</head>
+
+<body>
+  <section id="form-pantalla">
+    <div class="form-register">
+      <h4>Login</h4>
+      <input class="controls" type="text" name="nombres" id="usuario" placeholder="Usuario">
+      <input class="controls" type="password" name="apellidos" id="password" placeholder="Contraseña">
+      <button class="boton3d" onclick="IniciarSesion()" type="button" value="Ingresar">Ingresar</button>
+      <p><a href="#" onclick="Registrarse()">No tengo una cuenta</a></p>
+      <br><a href="#" onclick="Olvido()">¿Olvidé contraseña?</a></br>
+    </div>
+
+    <div class="form-Derecha">
+      <h4>Movie Station</h4>
+    </div>
+
+    <div class="form-Derecha2">
+      <button class="boton"><a class="aBoton" href="#" onclick="Acerca()">Acerca de </a><button>
+    </div>
+
+    <div class="form-Derecha3">
+
+
+
+    </div>
+
+
+  </section>
+</body>
+
+
+<script>
+  // Metodo para iniciar sesion
+  function IniciarSesion() {
+
+    var username = document.querySelector('#usuario').value
+    var password = document.querySelector('#password').value
+
+
+    var objeto = {
+      'usuario': username,
+      'password': password
+    }
+
+    console.log(objeto)
+
+    fetch('http://127.0.0.1:5000/Login2/', {
+      method: 'POST',
+      body: JSON.stringify(objeto),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .catch(err => {
+        console.error('Error:', err)
+        alert("Ocurrio un error, ver la consola")
+      })
+      .then(response => {
+        console.log(response);
+        console.log(response.message)
+        if (response.message == "Failed") {
+          alert("No has ingresado las credencilaes correctas")
+        } else {
+          if (response.message == "Success1") {//si es un cliente
+            alert(`Credenciales correctas, bienvenido ${username}`)
+            sessionStorage.setItem("usuario", username)
+            location.href = "indexC.html"//aqui deberia de ir a la pagina de los clientes
+          } else {
+            alert(`Credenciales correctas, bienvenido ${username}`)//si es un admi
+            sessionStorage.setItem("usuario", username)
+            location.href = "index.html"//aqui deberia de ir a la pagina de los admis
+          }
+        }
+      })
+  }
+
+  function Registrarse() {
+    location.href = "Registro.html"
+  }
+
+  function Olvido() {
+    location.href = "Recuperar.html"
+  }
+  function Acerca() {
+    location.href = "Acerca.html"
+  }
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilocuatro.css">    
+    <title>ModificarUsuarios</title>
+  </head>
+
+  <body  onload="CargarInfo()"> 
+    <section class="form-register">
+      <h4>Modificaciones Administradores</h4>
+    
+      <input  class="controls" type="text" name="nombre" id="nombre" placeholder="Nombre" >
+      <input class="controls" type="text" name="apellido" id="apellido" placeholder="Apellido">
+      <input class="controls" type="text" name="usuario" id="usuario" placeholder="Usuario">
+      <input class="controls" type="text" name="password" id="password" placeholder="Contraseña">
+
+
+      <input class="botons" onclick="Modificar()" type="button" value="Modificar">
+      <input class="botons" onclick="Eliminar()" type="button" value="Eliminar">
+
+      <p><a href="#" onclick="Volver()">Regresar</a></p>
+    </section>
+ 
+
+    <script>
+      //Funcion que coloca la info en las cajas de texto 
+        function CargarInfo() {
+          var cargar = sessionStorage.buscar
+        fetch(`http://127.0.0.1:5000//Administradores1/${cargar}`)
+        .then(response => response.json())
+        .catch(error => {
+            console.log(error)
+        })
+      
+        .then(res =>{
+            console.log(res)
+
+            document.querySelector('#nombre').value = res.nombre
+            document.querySelector('#apellido').value = res.apellido
+            document.querySelector('#usuario').value = res.usuario
+            document.querySelector('#password').value = res.contrasena
+            
+        })
+        
+        
+        }
+           
+           //Funcion Modificar
+        function Modificar(){
+            var nombre = document.querySelector('#nombre').value
+            var apellido = document.querySelector('#apellido').value
+            var usuario = document.querySelector('#usuario').value
+            var password = document.querySelector('#password').value
+
+            var objeto = {
+                'nombre': nombre,
+                'apellido': apellido,
+                'usuario': usuario,
+                'password':password
+            }
+
+            console.log(objeto)
+            fetch(`http://127.0.0.1:5000/Administradores2/${usuario}`, {
+              method: 'PUT',
+              body: JSON.stringify(objeto),
+              headers:{
+                'Content-Type' : 'application/json'
+              }
+            }).then(res => res.json())
+            .catch(error => {
+              console.error('Error:', error)
+              alert("Ha ocurrido un error al consumir la API, revise su consola")
+            })
+            .then(response => {
+              console.log('Sucess:', response);
+              alert(response.message)
+              location.href="index.html"
+            })
+        }
+        //Funcion que elimina un elemento
+          function Eliminar(){
+            var usuario = document.querySelector('#usuario').value
+            fetch(`http://127.0.0.1:5000/Administradores3/${usuario}`, {
+              method: 'DELETE',
+            }).then(res => res.json())
+            .catch(error => {
+              console.error('Error:', error)
+              alert("Ha ocurrido un error al consumir la API, revise su consola")
+            })
+            .then(response =>{
+              console.log('Success:', response);
+              alert(response.message)
+              location.href="index.html"
+
+            })
+          }
+
+        //Funcion que regresa a la pagina anteriro
+        function Volver(){
+            location.href="index.html"
+        }
+   
+    </script>
+
+ </body> 
+
+</html>

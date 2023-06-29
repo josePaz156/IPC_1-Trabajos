@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Comentarios</title>
+	<link rel="stylesheet" href="estilosT.css">
+	<link rel="stylesheet" href="font-awesome.css">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="main.js"></script>
+</head>
+<body>
+	<div class="wrap">
+		<ul class="tabs">
+			<li><a href="#tab1"><span class="fa fa-music"></span><span class="tab-text">Canciones</span></a></li>
+		
+		</ul>
+
+		<div class="secciones">
+			<!------agregando estilo con css a las tablas!---->
+			<style type="text/css">
+				table, th, td {
+					 border: 1px solid black;
+					 border-collapse: collapse;
+				}
+
+				th, td {
+					padding: 10	px;
+					text-align: center;
+
+				}
+				table {
+					background-color: rgb(166, 179, 132);
+				}
+				.section-title{
+					text-align: center;
+				}
+				th{
+				   background-color: rgb(119, 133, 75);
+
+				}
+				.button{
+					width: 50%;
+                    background: #907d10;
+                    border: none;
+                    padding: 12px;
+                    color:  rgb(176, 210, 214);
+                    margin: 16px;
+                    font-size: 16px;
+                    border:0;
+
+				}
+				.img-fluid{
+		
+					text-align: center;
+				
+				}
+		   </style>
+			<article id="tab1">
+				<body  id="main2" onload="MostrarCanciones()" >
+					<section id="about" class="about">
+						<div class="container">
+							<div class="section-title">
+								
+							</div>
+							<br><a href="#" onclick="Regresa()">Regresar</a></br>
+							<h1>Comentarios realizados a esta Canción</h1>
+							<table class="table" style="width: 100%">
+								<thead>
+									<tr>
+                                        <th scope="col">Cancion</th>
+													
+									</tr>
+								</thead>
+							<tbody id="CuerpoCanciones">
+						</tbody>
+					</table>
+		
+				
+				<script>
+
+				function MostrarCanciones()
+				{
+                    var cargar = sessionStorage.buscar
+                    var contenido = document.querySelector('#CuerpoCanciones')
+					contenido.innerHTML = ""
+                    fetch(`http://127.0.0.1:5000//Canciones1/${cargar}`)
+                    .then(response => response.json())
+					.catch(error => {
+						console.log(error)
+				})
+					.then(res => {
+							   contenido.innerHTML +=                    
+						        `<tr>
+                                <td>
+                                    <img src="${res.Imagen}" class="img-fluid" height="200" width="200">
+                                    <br> ${res.Nombre}</br>
+                                </td>
+                                </tr>`    
+                                                           
+					})	
+                    VerComentario()  	
+                     
+				}
+
+
+
+
+            function VerComentario(){
+                var contenido = document.querySelector('#CuerpoCanciones')
+					contenido.innerHTML = ""
+					
+					var cargar2 = sessionStorage.buscar                                                             
+					fetch(`http://127.0.0.1:5000//Comentariosm/${cargar2}`)
+					.then(response => response.json())
+					.catch(error => {
+						console.log(error)
+					})
+					.then(res =>{
+						for (var i in res) {
+			  			if(res[i].nombre!=undefined && res[i].persona!=undefined){
+								console.log(res[i])
+						     	contenido.innerHTML += 
+						       `<tr>
+                               
+								<td><b> ${res[i].persona}:</b> ${res[i].nombre}</td>
+							   </tr>`
+							}
+						}
+                    })   
+			     }
+                    
+
+
+		
+			function Regresa(){
+				location.href="index.html"
+			}
+			
+			  </script>
+		  </body>
+		
+
+			</article>
+		</div>
+	</div>
+</body>
+</html>

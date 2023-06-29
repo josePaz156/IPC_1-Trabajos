@@ -1,0 +1,120 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+body {
+  background-color: #000;
+
+}
+
+.form-register {
+  width: 400px;
+  padding: 100px;
+  margin-left: 800px;
+  margin-top: 90px;
+  border-radius: 40px;
+  font-family: 'calibri';
+  color:  rgb(176, 210, 214);
+  box-shadow: -20px 13px 100px rgb(94, 167, 177);
+  margin: center;
+  text-align: center;
+  font-family: 'calibri';
+
+}
+.form-Derecha {
+  margin-top: -370px;
+  margin-left: 100pxs;
+  width: 400px; 
+  color:  rgb(208, 214, 214);
+  text-align: center;
+  font-family: Calibri;
+  font-size: 100px;
+}
+
+.boton{
+  width: 95%;
+  background: #187e79;
+  border: none;
+  padding: 12px;
+  color:  rgb(176, 210, 214);
+  margin-left: 150px;
+  font-size: 16px;
+  border:0;
+  border-radius: 5px;
+}
+
+.aBoton{
+  text-decoration: none;
+  color: white;
+}
+
+.form-Derecha2 {
+  margin-top: 150px;
+  width: 150px; 
+  color: white;
+  text-align: center;
+  font-family: 'Times';
+  font-size: 20px;
+}
+
+.form-Derecha3 {
+  margin-top: 200px;
+  width: -300px; 
+  color: white;
+  text-align: center;
+  font-family: 'Times';
+  font-size: 30px;
+  color: white;
+}
+.form-register h4 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.controls {
+  width: 110%;
+  background: #24303c;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 2px solid #1fc5bd;
+  font-family: 'calibri';
+  font-size: 20px;
+  color:  rgb(176, 210, 214);
+  margin: center;
+}
+
+.form-register p {
+  height: 20px; /*aqui es donde se decide el largo de la caja*/
+  text-align: center;
+  font-size: 18px; /*aqui es donde se decide el trama?o de las letras no tengo una cuenta*/
+  line-height: -20px;
+}
+
+.form-register a {
+  color: rgb(176, 210, 214);
+  text-decoration: none;
+}
+
+.form-register a:hover {
+  color:  rgb(176, 210, 214);
+  text-decoration: underline;
+}
+
+.form-register .boton3d {
+  width: 95%;
+  background: #187e79;
+  border: none;
+  padding: 12px;
+  color:  rgb(176, 210, 214);
+  margin: 16px;
+  font-size: 16px;
+  border:0;
+  border-radius: 5px;
+}
+
+
+
